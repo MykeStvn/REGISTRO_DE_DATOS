@@ -8,8 +8,8 @@
 <body>
     <h1 style="text-align: center;"> GESTION DE PRODUCTOS </h1>
     <hr>
-    <form action="insert">
-        <input type="text" name="" title="Nombre" id="name" placeholder="Ingrese el nombre del producto"><br>
+    <form id="form-producto">
+        <input type="text" name="" title="Nombre" id="nombre" placeholder="Ingrese el nombre del producto"><br>
         <input type="text" name="" title="Precio" id="precio" placeholder="Ingrese el precio del producto"><br>
         <input type="text" name="" title="Descripción" id="descripcion" placeholder="Ingrese la descripcion del producto">
         <br>
@@ -37,6 +37,21 @@
     // CONFIGURACION FIREBASE
     import {getFirestore,collection,addDoc,onSnapshot,deleteDoc,doc}
         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    
+     // variable para la configuracion de la bd   
+    const db = getFirestore(app);
+    //guardar todo lo del form en esta constante
+    const productform = document.getElementById("form-producto"); 
+    //llamar a la funcion addEventListener para realizar acciones cuando se aplaste el boton submit
+    // creacion evento asyc asincrono
+    productform.addEventListener("submit", async(e)=>{
+        e.preventDefault();
+        await addDoc(collection(db,"productos"),{
+            nombre: productform.nombre.value,
+            precio: productform.precio.value,
+            descripcion: productform.descripcion.value
+        });
+        productform.reset();
+    }
+);
   </script>
 </html>
